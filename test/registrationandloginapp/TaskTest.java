@@ -58,5 +58,43 @@ public class TaskTest {
         assertTrue(sent.contains("It is dinner time !"));
     }
 
-    
+    @Test
+    public void testDisplayLongestMessage() {
+        // Longest is Message 2
+        String expected = "Where are you? You are late! I have asked you to be on time.";
+        assertEquals(expected, task.displayLongestMessage());
+    }
+
+    @Test
+    public void testSearchByID() {
+        // Search for Message 4 ID "0838884567"
+        String result = task.searchByID("0838884567");
+        assertTrue(result.contains("It is dinner time !"));
+    }
+
+    @Test
+    public void testSearchByRecipient() {
+        // Search for +27838884567 (Message 2 and 5)
+        String result = task.searchByRecipient("+27838884567");
+        assertTrue(result.contains("Where are you? You are late! I have asked you to be on time."));
+        assertTrue(result.contains("Ok, I am leaving without you."));
+    }
+
+    @Test
+    public void testDeleteByHash() {
+        String hashToDelete = msg2.getMessageHash();
+        String result = task.deleteByHash(hashToDelete);
+        assertEquals("Message: \"Where are you? You are late! I have asked you to be on time.\" successfully deleted.", result);
+        
+        // Verify it's gone from stored array
+        assertFalse(task.getStoredMessagesArray().contains("Where are you? You are late! I have asked you to be on time."));
+    }
+
+    @Test
+    public void testDisplayReport() {
+        String report = task.displayReport();
+        // Should contain details of Stored messages (Msg 2 and Msg 5)
+        assertTrue(report.contains("Where are you?"));
+        assertTrue(report.contains("Ok, I am leaving without you."));
+    }
 }
