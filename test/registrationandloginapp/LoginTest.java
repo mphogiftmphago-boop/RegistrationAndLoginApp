@@ -114,5 +114,21 @@ public class LoginTest {
         assertEquals(expected, login.registerUser());
     }
 
-   
+    @Test
+    public void testReturnLoginStatusSuccessMessage() {
+        login.setUsername("kyl_1");
+        login.setPassword("Ch€ckM8#");
+        boolean status = login.loginUser("kyl_1", "Ch€ckM8#");
+        String expected = "Welcome " + login.getFirstName() + ", " + login.getLastName() + " it is great to see you again.";
+        assertEquals(expected, login.returnLoginStatus(status));
+    }
+
+    @Test
+    public void testReturnLoginStatusFailureMessage() {
+        login.setUsername("kyl_1");
+        login.setPassword("Ch€ckM8#");
+        boolean status = login.loginUser("invalid", "invalid");
+        String expected = "Username or password incorrect, please try again.";
+        assertEquals(expected, login.returnLoginStatus(status));
+    }
 }
